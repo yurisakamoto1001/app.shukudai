@@ -1,0 +1,28 @@
+import streamlit as st
+import numpy as np
+from scipy.optimize import minimize
+
+st.title("Fun with optimization")
+
+# Define a simple function for optimization
+def fun(x):
+    return x[0]**2 + x[1]**2
+
+# Define the optimization constraints
+cons = ({'type': 'eq', 'fun': lambda x:  x[0] - x[1]},
+        {'type': 'ineq', 'fun': lambda x: -x[0] - x[1] + 1})
+
+# Set the optimization bounds
+bnds = ((0, None), (0, None))
+
+# Set the starting point for the optimization
+x0 = [1,1]
+
+# Run the optimization
+res = minimize(fun, x0, bounds=bnds, constraints=cons)
+
+# Print the results
+st.write("Optimization results:")
+st.write("x = ", res.x)
+st.write("fun = ", res.fun)
+st.write("message = ", res.message)
